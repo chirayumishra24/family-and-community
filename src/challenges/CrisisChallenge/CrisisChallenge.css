@@ -13,7 +13,7 @@
 
 .crisis-actions-area h3 { font-size:var(--text-base); margin-bottom:12px; color:var(--text-muted); }
 .crisis-actions { display:flex; flex-direction:column; gap:8px; }
-.action-card { display:flex; align-items:center; gap:12px; padding:12px 16px; background:var(--surface); border:2px solid #e2e8f0; border-radius:var(--radius-md); text-align:left; transition:all 0.2s var(--ease-out); }
+.action-card { display:flex; align-items:center; gap:12px; padding:14px 18px; background:var(--surface); border:2px solid #e2e8f0; border-radius:var(--radius-md); text-align:left; transition:all 0.2s var(--ease-out); touch-action:manipulation; user-select:none; -webkit-user-select:none; cursor:pointer; min-height:52px; }
 .action-card:hover:not(:disabled) { border-color:var(--cat-solve); transform:translateX(4px); }
 .action-selected { border-color:var(--cat-solve); background:var(--cat-solve-bg); }
 .action-order { display:flex; align-items:center; justify-content:center; width:28px; height:28px; background:var(--cat-solve); color:white; border-radius:50%; font-weight:800; font-size:var(--text-sm); flex-shrink:0; animation:bounceIn 0.3s var(--ease-spring); }
@@ -27,3 +27,14 @@
 .step-negative { background:#fef2f2; border-left:3px solid var(--danger); }
 .step-emoji { font-size:1.2rem; flex-shrink:0; }
 .crisis-message { font-weight:600; margin:16px 0; color:var(--text); }
+
+@media (min-width: 1440px) {
+  .action-card { padding:16px 22px; font-size:var(--text-base); }
+  .action-order { width:34px; height:34px; font-size:var(--text-base); }
+}
+
+@media (min-width: 1920px) {
+  .action-card { padding:20px 26px; font-size:var(--text-lg); border-radius:var(--radius-lg); }
+  .action-order { width:40px; height:40px; font-size:var(--text-lg); }
+  .action-emoji { font-size:1.6rem; }
+}

@@ -315,3 +315,31 @@
     align-items: flex-start;
   }
 }
+
+@media (min-width: 1440px) {
+  .instructions-modal {
+    max-width: 1000px;
+  }
+  .instructions-tab {
+    padding: 14px 20px;
+    font-size: var(--text-base);
+  }
+  .instructions-close-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .instructions-modal {
+    max-width: 1250px;
+  }
+  .instructions-tab {
+    padding: 16px 24px;
+    font-size: var(--text-lg);
+  }
+  .instructions-body {
+    padding: 32px;
+  }
+}

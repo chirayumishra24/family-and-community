@@ -17,12 +17,13 @@
 .need-desc { font-size:var(--text-sm); color:var(--text-muted); }
 .need-range { font-size:var(--text-xs); color:var(--text-light); white-space:nowrap; }
 
-.need-controls { display:flex; align-items:center; gap:8px; }
-.need-btn { width:36px; height:36px; border-radius:50%; background:var(--primary); color:white; font-size:1.2rem; font-weight:700; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
-.need-btn:hover:not(:disabled) { background:var(--primary-dark); transform:scale(1.1); }
+.need-controls { display:flex; align-items:center; gap:12px; }
+.need-btn { width:46px; height:46px; min-width:46px; min-height:46px; border-radius:50%; background:var(--primary); color:white; font-size:1.4rem; font-weight:800; display:flex; align-items:center; justify-content:center; transition:all 0.2s; touch-action:manipulation; user-select:none; -webkit-user-select:none; }
+.need-btn:hover:not(:disabled) { background:var(--primary-dark); transform:scale(1.08); }
+.need-btn:active:not(:disabled) { transform:scale(0.95); }
 .need-btn:disabled { opacity:0.3; cursor:not-allowed; }
 
-.need-bar-wrapper { flex:1; height:36px; background:#f1f5f9; border-radius:var(--radius-md); position:relative; overflow:hidden; }
+.need-bar-wrapper { flex:1; height:42px; background:#f1f5f9; border-radius:var(--radius-md); position:relative; overflow:hidden; }
 .need-bar { height:100%; background:linear-gradient(90deg,var(--cat-share),#d97706); border-radius:var(--radius-md); transition:width 0.3s var(--ease-out); }
 .need-value { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-weight:800; font-size:var(--text-lg); color:var(--text); }
 
@@ -35,3 +36,16 @@
 .result-received { font-weight:600; color:var(--text-muted); }
 .result-status { font-size:var(--text-xs); color:var(--text-muted); }
 .share-message { font-weight:600; margin:16px 0; }
+
+@media (min-width: 1440px) {
+  .need-btn { width:52px; height:52px; min-width:52px; min-height:52px; font-size:1.6rem; }
+  .need-bar-wrapper { height:48px; }
+  .need-card { padding:20px; }
+  .need-value { font-size:var(--text-xl); }
+}
+
+@media (min-width: 1920px) {
+  .need-btn { width:60px; height:60px; min-width:60px; min-height:60px; font-size:1.8rem; }
+  .need-bar-wrapper { height:56px; }
+  .need-card { padding:24px; }
+}

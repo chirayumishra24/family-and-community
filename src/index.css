@@ -103,6 +103,8 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 body {
@@ -112,6 +114,8 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   min-height: 100vh;
+  touch-action: manipulation;
+  overscroll-behavior-y: none;
 }
 
 #root {
@@ -364,5 +368,43 @@ a {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Smart Board & Touchscreen Ergonomics ── */
+button, .btn, [role="button"] {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@media (pointer: coarse) {
+  button, .btn, [role="button"] {
+    min-height: 48px;
+  }
+}
+
+/* ── Smart Board Resolutions (Interactive Classroom Displays: 65"-86" 1080p, 2K & 4K) ── */
+@media (min-width: 1440px) and (min-height: 800px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1800px) and (min-height: 950px) {
+  html {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 2400px) {
+  html {
+    font-size: 25px;
+  }
+}
+
+@media (min-width: 3200px) {
+  html {
+    font-size: 30px;
   }
 }
