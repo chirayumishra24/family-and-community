@@ -192,16 +192,6 @@ export default function CommunityBoard() {
               </div>
             )}
 
-            {/* Living Vehicles & Town Motion */}
-            {state.settings.animationsEnabled && (
-              <div className="map-living-layer">
-                <div className="moving-vehicle vehicle-bus" title="School Bus">🚌</div>
-                <div className="moving-vehicle vehicle-ambulance" title="Health Ambulance">🚑</div>
-                <div className="moving-vehicle vehicle-bike" title="Park Cyclist">🚲</div>
-                <div className="ambient-birds">🕊️</div>
-              </div>
-            )}
-
             <div className="map-buildings">
               {buildingMap.map(b => {
                 const bState = state.community.buildings[b.type];
@@ -217,7 +207,7 @@ export default function CommunityBoard() {
                     title={`Click to inspect ${b.label}`}
                   >
                     <img src={b.img} alt={b.label} className="building-img" />
-                    <div className="building-label">{b.emoji} {b.label} 🔍</div>
+                    <div className="building-label">{b.label}</div>
                   </div>
                 );
               })}

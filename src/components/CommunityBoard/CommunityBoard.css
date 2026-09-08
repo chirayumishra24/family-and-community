@@ -76,41 +76,6 @@
 .festival-lights-overlay { position:absolute; inset:0; pointer-events:none; z-index:8; background:radial-gradient(ellipse at 50% 20%, rgba(251,191,36,0.25), transparent 70%); }
 .festival-lanterns { position:absolute; top:8px; width:100%; text-align:center; font-size:1.4rem; letter-spacing:14px; text-shadow:0 0 10px rgba(245,158,11,0.8); animation:pulse 2s infinite alternate; }
 
-/* Living Vehicles & Ambient Motion */
-.map-living-layer { position:absolute; inset:0; pointer-events:none; z-index:7; }
-.moving-vehicle { position:absolute; font-size:1.3rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.4)); will-change:transform; }
-.vehicle-bus { top:14%; left:20%; animation:driveBus 20s linear infinite; }
-.vehicle-ambulance { top:46%; left:65%; animation:driveAmbulance 16s ease-in-out infinite; }
-.vehicle-bike { top:62%; left:42%; animation:rideBike 18s linear infinite; font-size:1.1rem; }
-.ambient-birds { position:absolute; top:8%; left:12%; font-size:1rem; opacity:0.8; animation:floatBirds 25s ease-in-out infinite alternate; }
-
-@keyframes driveBus {
-  0% { transform: translate(0, 0) scaleX(1); }
-  45% { transform: translate(260px, 15px) scaleX(1); }
-  50% { transform: translate(260px, 15px) scaleX(-1); }
-  95% { transform: translate(0, 0) scaleX(-1); }
-  100% { transform: translate(0, 0) scaleX(1); }
-}
-
-@keyframes driveAmbulance {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(20px, -70px) scale(1.05); }
-  100% { transform: translate(0, 0) scale(1); }
-}
-
-@keyframes rideBike {
-  0% { transform: translate(0, 0) scaleX(-1); }
-  48% { transform: translate(-140px, 25px) scaleX(-1); }
-  52% { transform: translate(-140px, 25px) scaleX(1); }
-  98% { transform: translate(0, 0) scaleX(1); }
-  100% { transform: translate(0, 0) scaleX(-1); }
-}
-
-@keyframes floatBirds {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(180px, 40px); }
-  100% { transform: translate(320px, -20px); }
-}
 
 /* Progress Strip */
 .progress-strip { display:flex; gap:8px; justify-content:center; align-items:center; padding:6px 14px; background:var(--surface); border-radius:var(--radius-lg); box-shadow:var(--shadow-sm); position:relative; overflow:hidden; }
