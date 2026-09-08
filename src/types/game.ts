@@ -63,6 +63,8 @@ export interface TeamState {
   subtitle: string;
   score: number;
   tokens: TokenState;
+  icon?: string;
+  captain?: string;
 }
 
 /* ── Vitality Metrics ── */
@@ -85,10 +87,36 @@ export interface ResidentReactionData {
 /* ── Settings ── */
 export interface GameSettings {
   timerEnabled: boolean;
+  timerSeconds?: number; // 60, 90, 120
   soundEnabled: boolean;
   animationsEnabled: boolean;
   festivalMode: boolean;
   language: 'en' | 'hi';
+}
+
+/* ── Building Educational Lore & Trivia ── */
+export interface BuildingTrivia {
+  question: string;
+  questionHi: string;
+  options: string[];
+  optionsHi: string[];
+  correctIndex: number;
+  explanation: string;
+  explanationHi: string;
+}
+
+export interface BuildingInfo {
+  type: BuildingType;
+  name: string;
+  nameHi: string;
+  emoji: string;
+  img: string;
+  civicRole: string;
+  civicRoleHi: string;
+  helpers: { title: string; titleHi: string; emoji: string; duty: string; dutyHi: string }[];
+  didYouKnow: string;
+  didYouKnowHi: string;
+  trivia: BuildingTrivia;
 }
 
 /* ── Challenge Types ── */
@@ -293,6 +321,7 @@ export interface GameState {
 export type GameAction =
   | { type: 'SET_PHASE'; phase: GamePhase }
   | { type: 'SET_TEAM_NAME'; team: TeamId; name: string; subtitle: string }
+  | { type: 'SET_TEAM_DETAILS'; team: TeamId; name: string; subtitle: string; icon?: string; captain?: string }
   | { type: 'NEXT_TURN' }
   | { type: 'ADD_SCORE'; team: TeamId; points: number }
   | { type: 'ADD_TOKEN'; team: TeamId; token: TokenType }
@@ -305,6 +334,7 @@ export type GameAction =
   | { type: 'COMPLETE_CATEGORY'; category: ChallengeCategory }
   | { type: 'SET_TIMER'; time: number }
   | { type: 'SET_MAX_TIMER'; time: number }
+  | { type: 'SET_TIMER_SECONDS'; seconds: number }
   | { type: 'USE_HINT' }
   | { type: 'CLEAR_HINT' }
   | { type: 'TOGGLE_SETTING'; setting: keyof GameSettings }

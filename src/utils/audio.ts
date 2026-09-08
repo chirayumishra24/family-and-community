@@ -1,4 +1,4 @@
-type SoundType = 'click' | 'start' | 'correct' | 'incorrect' | 'token' | 'building' | 'celebration';
+type SoundType = 'click' | 'start' | 'correct' | 'incorrect' | 'token' | 'building' | 'celebration' | 'tick' | 'buzzer';
 
 let audioCtx: AudioContext | null = null;
 
@@ -35,6 +35,11 @@ export function playSound(sound: SoundType, enabled: boolean) {
     case 'incorrect': playTone(220, 0.3, 'triangle', 0.1); break;
     case 'token': playTone(1200, 0.15, 'sine', 0.1); setTimeout(() => playTone(1600, 0.15, 'sine', 0.08), 100); break;
     case 'building': playChord([440, 554, 659], 0.6); break;
+    case 'tick': playTone(1000, 0.04, 'triangle', 0.08); break;
+    case 'buzzer':
+      playTone(180, 0.25, 'sawtooth', 0.15);
+      setTimeout(() => playTone(150, 0.35, 'sawtooth', 0.18), 150);
+      break;
     case 'celebration':
       [0, 150, 300, 450, 600].forEach((delay, i) =>
         setTimeout(() => playChord([523 + i * 50, 659 + i * 50, 784 + i * 50], 0.4), delay)

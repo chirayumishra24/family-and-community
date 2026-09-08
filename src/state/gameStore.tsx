@@ -13,17 +13,17 @@ const initialState: GameState = {
   round: 1,
   totalRounds: 8,
   teams: {
-    A: { name: 'Community Builders', subtitle: 'Team A', score: 0, tokens: { ...emptyTokens } },
-    B: { name: 'Community Connectors', subtitle: 'Team B', score: 0, tokens: { ...emptyTokens } },
+    A: { name: 'Community Builders', subtitle: 'Team A', score: 0, tokens: { ...emptyTokens }, icon: '🛡️', captain: '' },
+    B: { name: 'Community Connectors', subtitle: 'Team B', score: 0, tokens: { ...emptyTokens }, icon: '⚡', captain: '' },
   },
   community: { buildings: { ...defaultBuildings }, webConnections: [], overallProgress: 0 },
   usedChallengeIds: [],
   currentChallenge: null,
   currentCategory: null,
-  timer: 45,
-  maxTimer: 45,
+  timer: 60,
+  maxTimer: 60,
   gamePhase: 'intro',
-  settings: { timerEnabled: true, soundEnabled: true, animationsEnabled: true, festivalMode: false, language: 'en' },
+  settings: { timerEnabled: true, timerSeconds: 60, soundEnabled: true, animationsEnabled: true, festivalMode: false, language: 'en' },
   hintUsed: false,
   completedCategories: [],
   scoreAnimation: null,
@@ -43,8 +43,24 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       return { ...state, gamePhase: action.phase };
     case 'SET_TEAM_NAME':
       return { ...state, teams: { ...state.teams, [action.team]: { ...state.teams[action.team], name: action.name, subtitle: action.subtitle } } };
+    case 'SET_TEAM_DETAILS':
+      return {
+        ...state,
+        teams: {
+          ...state.teams,
+          [action.team]: {
+            ...state.teams[action.team],
+            name: action.name,
+            subtitle: action.subtitle,
+            icon: action.icon || state.teams[action.team].icon || '🛡️',
+            captain: action.captain || '',
+          },
+        },
+      };
+    case 'SET_TIMER_SECONDS':
+      return { ...state, timer: action.seconds, maxTimer: action.seconds, settings: { ...state.settings, timerSeconds: action.seconds } };
     case 'NEXT_TURN':
-      return { ...state, currentTeam: state.currentTeam === 'A' ? 'B' : 'A', round: state.round + 1, hintUsed: false };
+      return { ...state, currentTeam: state.currentTeam === 'A' ? 'B' : 'A', round: state.round + 1, hintUsed: false, timer: state.settings.timerSeconds || 60 };
     case 'ADD_SCORE': {
       const team = state.teams[action.team];
       return { ...state, teams: { ...state.teams, [action.team]: { ...team, score: team.score + action.points } } };

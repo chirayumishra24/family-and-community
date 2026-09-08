@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useGame } from '../../state/gameStore';
 import { playSound } from '../../utils/audio';
 import PrintableWorksheet from './PrintableWorksheet';
+import PrintableCertificate from './PrintableCertificate';
 import './ResultsScreen.css';
 
 const tokenInfo = [
@@ -18,6 +19,7 @@ export default function ResultsScreen() {
   const { state, dispatch } = useGame();
   const navigate = useNavigate();
   const [showWorksheet, setShowWorksheet] = useState(false);
+  const [showCertificate, setShowCertificate] = useState(false);
 
   const teamA = state.teams.A;
   const teamB = state.teams.B;
@@ -122,8 +124,11 @@ export default function ResultsScreen() {
         </div>
 
         <div className="results-actions">
+          <button className="btn btn-success btn-large" onClick={() => setShowCertificate(true)}>
+            🎓 Print Certificate
+          </button>
           <button className="btn btn-secondary btn-large" onClick={() => setShowWorksheet(true)}>
-            🖨️ Print Holiday Homework
+            📝 Print Homework Worksheet
           </button>
           <button className="btn btn-primary btn-large" onClick={handleRestart}>
             🔄 Play Again
@@ -138,6 +143,10 @@ export default function ResultsScreen() {
 
       {showWorksheet && (
         <PrintableWorksheet state={state} onClose={() => setShowWorksheet(false)} />
+      )}
+
+      {showCertificate && (
+        <PrintableCertificate onClose={() => setShowCertificate(false)} />
       )}
     </div>
   );

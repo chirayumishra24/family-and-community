@@ -5,6 +5,8 @@ import { selectChallenge } from '../../utils/challengeSelection';
 import { playSound } from '../../utils/audio';
 import type { ChallengeCategory, BuildingType, BuildingState } from '../../types/game';
 import InstructionsModal from '../InstructionsModal/InstructionsModal';
+import BuildingExplorerModal from '../BuildingExplorerModal/BuildingExplorerModal';
+import ClassroomTimer from '../ClassroomTimer/ClassroomTimer';
 import VitalityBar from './VitalityBar';
 import ResidentReaction from '../ResidentReaction/ResidentReaction';
 import { t } from '../../utils/translations';
@@ -50,10 +52,35 @@ export default function CommunityBoard() {
   const [selectedCat, setSelectedCat] = useState<ChallengeCategory | null>(null);
   const [showSettings, setShowSettings] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
+  const [inspectBuilding, setInspectBuilding] = useState<BuildingType | null>(null);
+  const [isSpinning, setIsSpinning] = useState(false);
 
   const handleSelectCategory = (cat: ChallengeCategory) => {
     playSound('click', state.settings.soundEnabled);
     setSelectedCat(selectedCat === cat ? null : cat);
+  };
+
+  const handleSurpriseChallenge = () => {
+    if (isSpinning) return;
+    const available = categories.filter(c => !state.completedCategories.includes(c.id));
+    if (available.length === 0) return;
+
+    setIsSpinning(true);
+    let count = 0;
+    const interval = setInterval(() => {
+      const randomCat = available[Math.floor(Math.random() * available.length)];
+      setSelectedCat(randomCat.id);
+      playSound('tick', state.settings.soundEnabled);
+      count++;
+
+      if (count >= 8) {
+        clearInterval(interval);
+        const finalPick = available[Math.floor(Math.random() * available.length)];
+        setSelectedCat(finalPick.id);
+        setIsSpinning(false);
+        playSound('start', state.settings.soundEnabled);
+      }
+    }, 120);
   };
 
   const handleStartChallenge = () => {
@@ -90,9 +117,10 @@ export default function CommunityBoard() {
           <h1 className="board-title">🏘️ {text.appTitle}</h1>
         </div>
         <div className="board-info">
+          <ClassroomTimer isPaused={!!inspectBuilding || showInstructions} />
           <div className="board-round">{text.round} <strong>{state.round}</strong> / {state.totalRounds}</div>
           <div className={`board-turn ${state.currentTeam === 'A' ? 'turn-a' : 'turn-b'}`}>
-            {state.currentTeam === 'A' ? '🔵' : '🔴'} {state.teams[state.currentTeam].name} {text.turn}
+            {state.teams[state.currentTeam].icon || (state.currentTeam === 'A' ? '🔵' : '🔴')} {state.teams[state.currentTeam].name} {text.turn}
           </div>
           <button
             className={`board-fest-btn ${state.settings.festivalMode ? 'active' : ''}`}
@@ -129,9 +157,10 @@ export default function CommunityBoard() {
         {/* Team A Panel */}
         <aside className={`team-panel team-panel-a ${state.currentTeam === 'A' ? 'team-active' : ''}`}>
           <div className="team-panel-header">
-            <span className="team-icon">🛡️</span>
+            <span className="team-icon">{state.teams.A.icon || '🛡️'}</span>
             <div>
               <div className="team-name">{state.teams.A.name}</div>
+              {state.teams.A.captain && <div className="team-captain-tag">👑 {state.teams.A.captain}</div>}
               <div className="team-label">Team A</div>
             </div>
           </div>
@@ -177,9 +206,18 @@ export default function CommunityBoard() {
               {buildingMap.map(b => {
                 const bState = state.community.buildings[b.type];
                 return (
-                  <div key={b.type} className={`map-building ${getBuildingClass(bState)}`} style={{ left: b.x, top: b.y }}>
+                  <div
+                    key={b.type}
+                    className={`map-building ${getBuildingClass(bState)}`}
+                    style={{ left: b.x, top: b.y }}
+                    onClick={() => {
+                      playSound('building', state.settings.soundEnabled);
+                      setInspectBuilding(b.type);
+                    }}
+                    title={`Click to inspect ${b.label}`}
+                  >
                     <img src={b.img} alt={b.label} className="building-img" />
-                    <div className="building-label">{b.emoji} {b.label}</div>
+                    <div className="building-label">{b.emoji} {b.label} 🔍</div>
                   </div>
                 );
               })}
@@ -225,9 +263,10 @@ export default function CommunityBoard() {
         {/* Team B Panel */}
         <aside className={`team-panel team-panel-b ${state.currentTeam === 'B' ? 'team-active' : ''}`}>
           <div className="team-panel-header">
-            <span className="team-icon">⚡</span>
+            <span className="team-icon">{state.teams.B.icon || '⚡'}</span>
             <div>
               <div className="team-name">{state.teams.B.name}</div>
+              {state.teams.B.captain && <div className="team-captain-tag">👑 {state.teams.B.captain}</div>}
               <div className="team-label">Team B</div>
             </div>
           </div>
@@ -286,6 +325,18 @@ export default function CommunityBoard() {
             </button>
           );
         })}
+
+        {/* Surprise Randomizer Button */}
+        <button
+          className={`cat-btn cat-surprise-btn ${isSpinning ? 'spinning' : ''}`}
+          onClick={handleSurpriseChallenge}
+          disabled={isSpinning || state.completedCategories.length >= categories.length}
+          title="Spin the wheel for a random challenge"
+        >
+          <span className="cat-emoji">🎲</span>
+          <span className="cat-title">{state.settings.language === 'hi' ? 'अचानक चुनें' : 'SURPRISE'}</span>
+          <span className="cat-subtitle">{state.settings.language === 'hi' ? 'पहिया घुमाएं' : 'Random Pick'}</span>
+        </button>
       </div>
 
       {/* Final Challenge Button */}
@@ -299,6 +350,9 @@ export default function CommunityBoard() {
 
       {/* Complete Activity Instructions Modal */}
       <InstructionsModal isOpen={showInstructions} onClose={() => setShowInstructions(false)} />
+
+      {/* Interactive Building Explorer Modal */}
+      <BuildingExplorerModal building={inspectBuilding} onClose={() => setInspectBuilding(null)} />
 
       {/* Resident Avatar Reaction Popup */}
       <ResidentReaction reaction={state.activeReaction} onClose={() => dispatch({ type: 'SET_REACTION', reaction: null })} />
