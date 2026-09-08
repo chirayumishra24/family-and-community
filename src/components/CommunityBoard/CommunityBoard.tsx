@@ -5,6 +5,9 @@ import { selectChallenge } from '../../utils/challengeSelection';
 import { playSound } from '../../utils/audio';
 import type { ChallengeCategory, BuildingType, BuildingState } from '../../types/game';
 import InstructionsModal from '../InstructionsModal/InstructionsModal';
+import VitalityBar from './VitalityBar';
+import ResidentReaction from '../ResidentReaction/ResidentReaction';
+import { t } from '../../utils/translations';
 import './CommunityBoard.css';
 
 const categories: { id: ChallengeCategory; title: string; subtitle: string; emoji: string; route: string; color: string }[] = [
@@ -77,19 +80,35 @@ export default function CommunityBoard() {
     }
   };
 
+  const text = t(state.settings.language);
+
   return (
-    <div className="board-screen">
+    <div className={`board-screen ${state.settings.festivalMode ? 'festival-theme' : ''}`}>
       {/* Header */}
       <header className="board-header">
         <div className="board-title-area">
-          <h1 className="board-title">🏘️ THE COMMUNITY QUEST</h1>
+          <h1 className="board-title">🏘️ {text.appTitle}</h1>
         </div>
         <div className="board-info">
-          <div className="board-round">Round <strong>{state.round}</strong> / {state.totalRounds}</div>
+          <div className="board-round">{text.round} <strong>{state.round}</strong> / {state.totalRounds}</div>
           <div className={`board-turn ${state.currentTeam === 'A' ? 'turn-a' : 'turn-b'}`}>
-            {state.currentTeam === 'A' ? '🔵' : '🔴'} {state.teams[state.currentTeam].name}'s Turn
+            {state.currentTeam === 'A' ? '🔵' : '🔴'} {state.teams[state.currentTeam].name} {text.turn}
           </div>
-          <button className="board-instructions-btn" onClick={() => setShowInstructions(true)} title="Activity Instructions">📖 Instructions</button>
+          <button
+            className={`board-fest-btn ${state.settings.festivalMode ? 'active' : ''}`}
+            onClick={() => dispatch({ type: 'TOGGLE_SETTING', setting: 'festivalMode' })}
+            title="Toggle Festival Lights"
+          >
+            {state.settings.festivalMode ? text.festivalToggle : text.dayToggle}
+          </button>
+          <button
+            className="board-lang-btn"
+            onClick={() => dispatch({ type: 'SET_LANGUAGE', language: state.settings.language === 'en' ? 'hi' : 'en' })}
+            title="Switch Language (English / हिंदी)"
+          >
+            {state.settings.language === 'en' ? '🇮🇳 हिंदी' : '🇬🇧 EN'}
+          </button>
+          <button className="board-instructions-btn" onClick={() => setShowInstructions(true)} title="Activity Instructions">{text.instructions}</button>
           <button className="board-settings-btn" onClick={() => setShowSettings(!showSettings)} title="Settings">⚙️</button>
         </div>
       </header>
@@ -100,6 +119,7 @@ export default function CommunityBoard() {
           <label><input type="checkbox" checked={state.settings.timerEnabled} onChange={() => dispatch({ type: 'TOGGLE_SETTING', setting: 'timerEnabled' })} /> Timer</label>
           <label><input type="checkbox" checked={state.settings.soundEnabled} onChange={() => dispatch({ type: 'TOGGLE_SETTING', setting: 'soundEnabled' })} /> Sound</label>
           <label><input type="checkbox" checked={state.settings.animationsEnabled} onChange={() => dispatch({ type: 'TOGGLE_SETTING', setting: 'animationsEnabled' })} /> Animations</label>
+          <label><input type="checkbox" checked={state.settings.festivalMode} onChange={() => dispatch({ type: 'TOGGLE_SETTING', setting: 'festivalMode' })} /> Festival Lights</label>
           <button className="btn btn-secondary" style={{fontSize:'0.8rem',padding:'6px 12px'}} onClick={handleReset}>🔄 Reset Game</button>
         </div>
       )}
@@ -135,6 +155,24 @@ export default function CommunityBoard() {
         <div className="community-map-area">
           <div className="community-map">
             <img src="./images/map-bg.jpg" alt="" className="map-bg" />
+
+            {/* Festival Lights Overlay */}
+            {state.settings.festivalMode && (
+              <div className="festival-lights-overlay">
+                <div className="festival-lanterns">🏮 ✨ 🏮 ✨ 🏮 ✨ 🏮</div>
+              </div>
+            )}
+
+            {/* Living Vehicles & Town Motion */}
+            {state.settings.animationsEnabled && (
+              <div className="map-living-layer">
+                <div className="moving-vehicle vehicle-bus" title="School Bus">🚌</div>
+                <div className="moving-vehicle vehicle-ambulance" title="Health Ambulance">🚑</div>
+                <div className="moving-vehicle vehicle-bike" title="Park Cyclist">🚲</div>
+                <div className="ambient-birds">🕊️</div>
+              </div>
+            )}
+
             <div className="map-buildings">
               {buildingMap.map(b => {
                 const bState = state.community.buildings[b.type];
@@ -162,8 +200,8 @@ export default function CommunityBoard() {
               </svg>
             )}
             <div className="map-center-label">
-              <div className="map-center-title">OUR COMMUNITY</div>
-              <div className="map-center-sub">People · Places · Possibilities</div>
+              <div className="map-center-title">{text.ourCommunity}</div>
+              <div className="map-center-sub">{text.communitySub}</div>
             </div>
           </div>
 
@@ -179,6 +217,9 @@ export default function CommunityBoard() {
             })}
             <div className="progress-bar-fill" style={{ width: `${state.community.overallProgress}%` }} />
           </div>
+
+          {/* Community Vitality Metrics Bar */}
+          <VitalityBar vitality={state.vitality} isHindi={state.settings.language === 'hi'} />
         </div>
 
         {/* Team B Panel */}
@@ -258,6 +299,9 @@ export default function CommunityBoard() {
 
       {/* Complete Activity Instructions Modal */}
       <InstructionsModal isOpen={showInstructions} onClose={() => setShowInstructions(false)} />
+
+      {/* Resident Avatar Reaction Popup */}
+      <ResidentReaction reaction={state.activeReaction} onClose={() => dispatch({ type: 'SET_REACTION', reaction: null })} />
     </div>
   );
 }

@@ -65,11 +65,30 @@ export interface TeamState {
   tokens: TokenState;
 }
 
+/* ── Vitality Metrics ── */
+export interface VitalityMetrics {
+  happiness: number;   // 0 - 100
+  fairness: number;    // 0 - 100
+  environment: number; // 0 - 100
+}
+
+/* ── Resident Avatar Reaction ── */
+export interface ResidentReactionData {
+  id: string;
+  name: string;
+  role: string;
+  avatar: string;
+  quote: string;
+  impactType: 'happiness' | 'fairness' | 'environment';
+}
+
 /* ── Settings ── */
 export interface GameSettings {
   timerEnabled: boolean;
   soundEnabled: boolean;
   animationsEnabled: boolean;
+  festivalMode: boolean;
+  language: 'en' | 'hi';
 }
 
 /* ── Challenge Types ── */
@@ -266,6 +285,8 @@ export interface GameState {
   hintUsed: boolean;
   completedCategories: ChallengeCategory[];
   scoreAnimation: { team: TeamId; points: number } | null;
+  vitality: VitalityMetrics;
+  activeReaction: ResidentReactionData | null;
 }
 
 /* ── Game Actions ── */
@@ -288,5 +309,8 @@ export type GameAction =
   | { type: 'CLEAR_HINT' }
   | { type: 'TOGGLE_SETTING'; setting: keyof GameSettings }
   | { type: 'SET_SCORE_ANIMATION'; data: { team: TeamId; points: number } | null }
+  | { type: 'UPDATE_VITALITY'; metrics: Partial<VitalityMetrics> }
+  | { type: 'SET_REACTION'; reaction: ResidentReactionData | null }
+  | { type: 'SET_LANGUAGE'; language: 'en' | 'hi' }
   | { type: 'RESET_GAME' }
   | { type: 'LOAD_STATE'; state: Partial<GameState> };

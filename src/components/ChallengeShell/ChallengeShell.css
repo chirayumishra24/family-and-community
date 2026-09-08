@@ -6,6 +6,51 @@
 .cs-emoji { font-size:1.5rem; }
 .cs-title { font-size:var(--text-xl); color:var(--text); }
 .cs-team-badge { display:flex; align-items:center; gap:6px; padding:6px 14px; border-radius:var(--radius-full); background:#f1f5f9; font-weight:700; font-size:var(--text-sm); }
+
+.cs-speech-btn {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-full);
+  padding: 4px 10px;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.cs-speech-btn:hover { background: #e2e8f0; }
+.cs-speech-btn.speaking { background: #fee2e2; border-color: #ef4444; color: #b91c1c; animation: pulse 1.2s infinite; }
+
+.cs-discuss-btn {
+  background: #fef9c3;
+  border: 1px solid #fde047;
+  border-radius: var(--radius-full);
+  padding: 4px 10px;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: #854d0e;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cs-discuss-btn:hover, .cs-discuss-btn.active { background: #fef08a; border-color: #eab308; }
+
+.cs-discussion-banner {
+  background: #fffbeb;
+  border-bottom: 2px solid #fde047;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: fadeInUp 0.3s ease-out;
+}
+.cs-discuss-icon { font-size: 1.5rem; flex-shrink: 0; }
+.cs-discuss-content { flex: 1; font-size: var(--text-xs); color: #78350f; }
+.cs-discuss-content strong { display: block; margin-bottom: 2px; font-size: var(--text-sm); }
+.cs-discuss-content p { margin: 0; }
+.cs-discuss-close { background: none; border: none; font-size: 1rem; color: #a16207; cursor: pointer; padding: 4px; }
+
 .cs-content { flex:1; padding:24px; max-width:1000px; width:100%; margin:0 auto; }
 
 @media (max-width:600px) { .cs-content { padding:16px; } }

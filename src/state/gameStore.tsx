@@ -23,10 +23,12 @@ const initialState: GameState = {
   timer: 45,
   maxTimer: 45,
   gamePhase: 'intro',
-  settings: { timerEnabled: true, soundEnabled: true, animationsEnabled: true },
+  settings: { timerEnabled: true, soundEnabled: true, animationsEnabled: true, festivalMode: false, language: 'en' },
   hintUsed: false,
   completedCategories: [],
   scoreAnimation: null,
+  vitality: { happiness: 50, fairness: 50, environment: 50 },
+  activeReaction: null,
 };
 
 function calcProgress(buildings: Record<BuildingType, BuildingState>): number {
@@ -81,6 +83,19 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       return { ...state, settings: { ...state.settings, [action.setting]: !state.settings[action.setting] } };
     case 'SET_SCORE_ANIMATION':
       return { ...state, scoreAnimation: action.data };
+    case 'UPDATE_VITALITY':
+      return {
+        ...state,
+        vitality: {
+          happiness: Math.max(0, Math.min(100, (action.metrics.happiness !== undefined ? state.vitality.happiness + action.metrics.happiness : state.vitality.happiness))),
+          fairness: Math.max(0, Math.min(100, (action.metrics.fairness !== undefined ? state.vitality.fairness + action.metrics.fairness : state.vitality.fairness))),
+          environment: Math.max(0, Math.min(100, (action.metrics.environment !== undefined ? state.vitality.environment + action.metrics.environment : state.vitality.environment))),
+        }
+      };
+    case 'SET_REACTION':
+      return { ...state, activeReaction: action.reaction };
+    case 'SET_LANGUAGE':
+      return { ...state, settings: { ...state.settings, language: action.language } };
     case 'RESET_GAME':
       return { ...initialState, settings: state.settings };
     case 'LOAD_STATE':

@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGame } from '../../state/gameStore';
 import { playSound } from '../../utils/audio';
+import PrintableWorksheet from './PrintableWorksheet';
 import './ResultsScreen.css';
 
 const tokenInfo = [
@@ -15,6 +17,7 @@ const tokenInfo = [
 export default function ResultsScreen() {
   const { state, dispatch } = useGame();
   const navigate = useNavigate();
+  const [showWorksheet, setShowWorksheet] = useState(false);
 
   const teamA = state.teams.A;
   const teamB = state.teams.B;
@@ -119,7 +122,12 @@ export default function ResultsScreen() {
         </div>
 
         <div className="results-actions">
-          <button className="btn btn-primary btn-large" onClick={handleRestart}>🔄 Play Again</button>
+          <button className="btn btn-secondary btn-large" onClick={() => setShowWorksheet(true)}>
+            🖨️ Print Holiday Homework
+          </button>
+          <button className="btn btn-primary btn-large" onClick={handleRestart}>
+            🔄 Play Again
+          </button>
         </div>
 
         <div className="results-footer">
@@ -127,6 +135,10 @@ export default function ResultsScreen() {
           <span>Skillizee · Grade 6 Social Science</span>
         </div>
       </div>
+
+      {showWorksheet && (
+        <PrintableWorksheet state={state} onClose={() => setShowWorksheet(false)} />
+      )}
     </div>
   );
 }
