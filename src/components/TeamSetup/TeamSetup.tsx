@@ -47,6 +47,12 @@ export default function TeamSetup() {
 
   return (
     <div className="setup-screen">
+      {/* Background with community illustration */}
+      <div className="setup-bg">
+        <img src="./images/setup-bg.jpg" alt="" className="setup-bg-img" />
+        <div className="setup-overlay" />
+      </div>
+
       <div className="setup-header">
         <h1 className="setup-title">Choose Your Teams & Crests</h1>
         <p className="setup-subtitle">Two teams collaborate to solve community challenges and build harmony</p>
