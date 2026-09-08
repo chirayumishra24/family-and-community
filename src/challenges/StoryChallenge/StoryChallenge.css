@@ -1,0 +1,28 @@
+.story-challenge { display:flex; flex-direction:column; gap:20px; animation:fadeInUp 0.5s var(--ease-out); }
+.story-scenario { border-left:4px solid var(--cat-stories); }
+.story-prompt { font-size:var(--text-lg); font-weight:700; margin-bottom:8px; }
+.story-situation { color:var(--text-muted); font-style:italic; }
+
+.story-viewpoints h3,.story-actions-area h3 { font-size:var(--text-base); margin-bottom:8px; color:var(--text-muted); }
+.viewpoint-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:10px; }
+.viewpoint-card { display:flex; flex-direction:column; align-items:center; gap:6px; padding:14px; background:var(--surface); border:2px solid #e2e8f0; border-radius:var(--radius-lg); text-align:center; transition:all 0.2s; cursor:pointer; }
+.viewpoint-card:hover { border-color:var(--cat-stories); transform:translateY(-2px); }
+.vp-active { border-color:var(--cat-stories); background:var(--cat-stories-bg); }
+.vp-emoji { font-size:2rem; }
+.vp-label { font-weight:700; font-size:var(--text-sm); }
+.vp-perspective { font-size:var(--text-sm); color:var(--text-muted); font-style:italic; margin-top:4px; animation:fadeIn 0.3s; }
+
+.story-actions { display:flex; flex-direction:column; gap:8px; }
+.story-action { display:flex; align-items:flex-start; gap:12px; padding:12px 16px; background:var(--surface); border:2px solid #e2e8f0; border-radius:var(--radius-md); text-align:left; transition:all 0.2s; }
+.story-action:hover:not(:disabled) { border-color:var(--cat-stories); transform:translateX(4px); }
+.sa-selected { border-color:var(--cat-stories); background:var(--cat-stories-bg); }
+.sa-positive { border-color:var(--success) !important; background:#ecfdf5 !important; }
+.sa-negative { border-color:var(--danger) !important; background:#fef2f2 !important; }
+.sa-emoji { font-size:1.3rem; flex-shrink:0; margin-top:2px; }
+.sa-content { flex:1; }
+.sa-label { font-weight:700; display:block; }
+.sa-consequence { font-size:var(--text-sm); color:var(--text-muted); margin-top:4px; animation:fadeIn 0.3s; }
+.sa-result { font-size:1.2rem; flex-shrink:0; }
+
+.story-feedback { text-align:center; border:2px solid var(--success); animation:bounceIn 0.5s var(--ease-spring); }
+.story-message { margin:16px 0; color:var(--text-muted); line-height:1.6; }

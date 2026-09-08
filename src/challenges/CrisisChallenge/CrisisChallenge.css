@@ -1,0 +1,29 @@
+.crisis-challenge { display:flex; flex-direction:column; gap:20px; animation:fadeInUp 0.5s var(--ease-out); }
+.crisis-scenario { border-left:4px solid var(--cat-solve); }
+.crisis-prompt { font-size:var(--text-lg); font-weight:700; margin-bottom:8px; }
+.crisis-context { color:var(--text-muted); }
+
+.crisis-people-row { display:flex; gap:16px; flex-wrap:wrap; }
+.crisis-group { flex:1; min-width:200px; }
+.crisis-group h4 { font-size:var(--text-sm); color:var(--text-muted); margin-bottom:8px; }
+.crisis-people { display:flex; gap:8px; flex-wrap:wrap; }
+.crisis-person { padding:8px 14px; border-radius:var(--radius-md); font-weight:600; font-size:var(--text-sm); }
+.affected { background:#fef2f2; border:1px solid #fecaca; }
+.helper { background:#ecfdf5; border:1px solid #a7f3d0; }
+
+.crisis-actions-area h3 { font-size:var(--text-base); margin-bottom:12px; color:var(--text-muted); }
+.crisis-actions { display:flex; flex-direction:column; gap:8px; }
+.action-card { display:flex; align-items:center; gap:12px; padding:12px 16px; background:var(--surface); border:2px solid #e2e8f0; border-radius:var(--radius-md); text-align:left; transition:all 0.2s var(--ease-out); }
+.action-card:hover:not(:disabled) { border-color:var(--cat-solve); transform:translateX(4px); }
+.action-selected { border-color:var(--cat-solve); background:var(--cat-solve-bg); }
+.action-order { display:flex; align-items:center; justify-content:center; width:28px; height:28px; background:var(--cat-solve); color:white; border-radius:50%; font-weight:800; font-size:var(--text-sm); flex-shrink:0; animation:bounceIn 0.3s var(--ease-spring); }
+.action-emoji { font-size:1.3rem; }
+.action-label { font-weight:600; }
+
+.crisis-feedback { text-align:center; border:2px solid var(--success); animation:bounceIn 0.5s var(--ease-spring); }
+.consequence-chain { display:flex; flex-direction:column; gap:8px; margin:16px 0; text-align:left; }
+.consequence-step { display:flex; align-items:flex-start; gap:10px; padding:10px 14px; border-radius:var(--radius-md); animation:slideInLeft 0.4s var(--ease-out) both; }
+.step-positive { background:#ecfdf5; border-left:3px solid var(--success); }
+.step-negative { background:#fef2f2; border-left:3px solid var(--danger); }
+.step-emoji { font-size:1.2rem; flex-shrink:0; }
+.crisis-message { font-weight:600; margin:16px 0; color:var(--text); }

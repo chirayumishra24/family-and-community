@@ -1,0 +1,11 @@
+.challenge-shell { min-height:100vh; background:var(--bg); display:flex; flex-direction:column; }
+.cs-header { display:flex; align-items:center; justify-content:space-between; padding:12px 64px 12px 24px; background:var(--surface); box-shadow:var(--shadow-sm); border-bottom:3px solid var(--accent, var(--primary)); flex-wrap:wrap; gap:8px; }
+.cs-back { font-family:var(--font-display); font-weight:700; font-size:var(--text-base); color:var(--text-muted); padding:6px 12px; border-radius:var(--radius-md); transition:all 0.2s; }
+.cs-back:hover { background:#f1f5f9; color:var(--text); }
+.cs-title-area { display:flex; align-items:center; gap:8px; }
+.cs-emoji { font-size:1.5rem; }
+.cs-title { font-size:var(--text-xl); color:var(--text); }
+.cs-team-badge { display:flex; align-items:center; gap:6px; padding:6px 14px; border-radius:var(--radius-full); background:#f1f5f9; font-weight:700; font-size:var(--text-sm); }
+.cs-content { flex:1; padding:24px; max-width:1000px; width:100%; margin:0 auto; }
+
+@media (max-width:600px) { .cs-content { padding:16px; } }

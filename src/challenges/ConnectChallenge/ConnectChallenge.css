@@ -1,0 +1,26 @@
+.connect-challenge { display:flex; flex-direction:column; gap:20px; animation:fadeInUp 0.5s var(--ease-out); }
+.connect-scenario { border-left:4px solid var(--cat-connect); }
+.connect-prompt { font-size:var(--text-lg); font-weight:700; margin-bottom:8px; }
+.connect-target { color:var(--text-muted); }
+
+.connect-entities { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
+.entity-btn { display:flex; flex-direction:column; align-items:center; gap:6px; padding:16px 20px; background:var(--surface); border:2px solid #e2e8f0; border-radius:var(--radius-lg); min-width:100px; transition:all 0.2s var(--ease-out); }
+.entity-btn:hover:not(:disabled) { border-color:var(--cat-connect); transform:translateY(-3px); box-shadow:var(--shadow-md); }
+.entity-selected { border-color:var(--cat-connect) !important; background:var(--cat-connect-bg); box-shadow:0 0 0 3px rgba(139,92,246,0.2); animation:pulse 1s infinite; }
+.entity-emoji { font-size:2rem; }
+.entity-label { font-weight:700; font-size:var(--text-sm); }
+
+.connect-lines { display:flex; flex-direction:column; gap:8px; padding:16px; background:var(--surface); border-radius:var(--radius-lg); min-height:60px; }
+.connection-tag { display:flex; align-items:center; gap:8px; padding:8px 14px; background:var(--cat-connect-bg); border-radius:var(--radius-md); font-weight:600; font-size:var(--text-sm); animation:slideInLeft 0.3s var(--ease-out); }
+.conn-valid { background:#ecfdf5; border:1px solid #a7f3d0; }
+.conn-invalid { background:#fef2f2; border:1px solid #fecaca; }
+.conn-status { margin-left:auto; }
+.conn-remove { margin-left:auto; color:var(--danger); font-weight:700; font-size:1.2rem; }
+.connect-empty { color:var(--text-light); font-style:italic; text-align:center; }
+
+.connect-feedback { text-align:center; border:2px solid var(--success); animation:bounceIn 0.5s var(--ease-spring); }
+.connect-feedback .feedback-header { margin-bottom:16px; }
+.connect-results { display:flex; flex-direction:column; gap:8px; margin-bottom:20px; text-align:left; }
+.connect-result { display:flex; align-items:flex-start; gap:8px; padding:10px; border-radius:var(--radius-md); font-size:var(--text-sm); }
+.result-valid { background:#ecfdf5; }
+.result-invalid { background:#fef2f2; }
